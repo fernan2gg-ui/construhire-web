@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConstruHire — Gestión documental para obras</title>
+  <meta name="description" content="ConstruHire digitaliza la carpeta de contratación de tus trabajadores. Los trabajadores suben sus documentos desde WhatsApp. Tú los apruebas en segundos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:      #1A6B3A;
+      --green-light:#2D9956;
+      --green-dark: #0F4523;
+      --green-50:   #f0fdf4;
+      --green-100:  #dcfce7;
+      --gray-50:    #f9fafb;
+      --gray-100:   #f3f4f6;
+      --gray-600:   #4b5563;
+      --gray-700:   #374151;
+      --gray-900:   #111827;
+      --white:      #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--gray-900); background: var(--white); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0 5%; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-size: 1.25rem; font-weight: 800; color: var(--green); letter-spacing: -0.5px; }
+    .logo span { color: var(--green-light); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--gray-600); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--green); }
+    .btn-nav {
+      background: var(--green); color: white; padding: 0.5rem 1.25rem;
+      border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .btn-nav:hover { background: var(--green-dark); color: white; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 60%, var(--green-light) 100%);
+      padding: 6rem 5% 5rem;
+      text-align: center; color: white;
+    }
+    .hero-badge {
+      display: inline-block; background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white; font-size: 0.8rem; font-weight: 600;
+      padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.5rem;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -1px; margin-bottom: 1.25rem;
+      max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .hero h1 em { font-style: normal; color: #86efac; }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,0.85);
+      max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: white; color: var(--green); padding: 0.85rem 2rem;
+      border-radius: 10px; font-weight: 700; font-size: 1rem;
+      text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    .btn-secondary {
+      background: transparent; color: white; padding: 0.85rem 2rem;
+      border-radius: 10px; font-weight: 600; font-size: 1rem;
+      text-decoration: none; border: 2px solid rgba(255,255,255,0.5);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: white; }
+    .hero-stats {
+      display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 4rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 800; color: #86efac; }
+    .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-top: 0.25rem; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 5%; }
+    .section-label {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--green); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800;
+      line-height: 1.2; letter-spacing: -0.5px; color: var(--gray-900);
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.1rem; color: var(--gray-600); line-height: 1.7;
+      max-width: 560px;
+    }
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+
+    /* ── PROBLEMA ── */
+    .problema { background: var(--gray-50); }
+    .problema-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .problema-card {
+      background: white; border: 1px solid #e5e7eb;
+      border-radius: 12px; padding: 1.75rem;
+    }
+    .problema-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .problema-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--gray-900); }
+    .problema-card p { font-size: 0.9rem; color: var(--gray-600); line-height: 1.6; }
+
+    /* ── COMO FUNCIONA ── */
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem; margin-top: 3.5rem; position: relative;
+    }
+    .step { text-align: center; }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--green); color: white;
+      font-size: 1.2rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+    .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .step p { font-size: 0.9rem; color: var(--gray-600); line-height: 1.6; }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .feature-card {
+      background: var(--green-50); border: 1px solid var(--green-100);
+      border-radius: 14px; padding: 2rem;
+    }
+    .feature-icon {
+      width: 44px; height: 44px; background: var(--green);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; margin-bottom: 1rem;
+    }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 0.9rem; color: var(--gray-600); line-height: 1.6; }
+
+    /* ── PARA QUIEN ── */
+    .para-quien { background: var(--gray-50); }
+    .audience-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .audience-card {
+      background: white; border-radius: 14px; padding: 2rem;
+      border: 2px solid transparent; transition: border-color 0.2s;
+    }
+    .audience-card:hover { border-color: var(--green); }
+    .audience-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .audience-card p { font-size: 0.9rem; color: var(--gray-600); line-height: 1.6; margin-bottom: 1rem; }
+    .audience-tag {
+      display: inline-block; background: var(--green-100); color: var(--green-dark);
+      font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      text-align: center; color: white;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800;
+      margin-bottom: 1rem; letter-spacing: -0.5px;
+    }
+    .cta-section p { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-bottom: 2.5rem; }
+    .cta-form {
+      display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
+      max-width: 480px; margin: 0 auto;
+    }
+    .cta-form input {
+      flex: 1; min-width: 220px; padding: 0.85rem 1.25rem;
+      border-radius: 10px; border: none; font-size: 1rem;
+      outline: none;
+    }
+    .btn-cta {
+      background: #16a34a; color: white; padding: 0.85rem 1.75rem;
+      border-radius: 10px; font-weight: 700; font-size: 1rem;
+      border: none; cursor: pointer; transition: background 0.2s; white-space: nowrap;
+    }
+    .btn-cta:hover { background: #15803d; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--gray-900); color: rgba(255,255,255,0.6);
+      padding: 2.5rem 5%; text-align: center; font-size: 0.875rem;
+    }
+    footer .footer-logo { font-size: 1.1rem; font-weight: 800; color: white; margin-bottom: 0.5rem; }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer a:hover { color: white; }
+
+    @media (max-width: 640px) {
+      nav .nav-links { display: none; }
+      .hero { padding: 4rem 5% 3rem; }
+      .hero-stats { gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Constru<span>Hire</span></div>
+  <div class="nav-links">
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#funcionalidades">Funcionalidades</a>
+    <a href="#para-quien">Para quién</a>
+    <a href="#contacto" class="btn-nav">Solicitar demo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🏗️ Para empresas constructoras</div>
+  <h1>Gestiona la documentación<br/>de tus trabajadores <em>sin papeles</em></h1>
+  <p>ConstruHire digitaliza la carpeta de contratación. Los trabajadores suben sus documentos desde su celular. Tú los apruebas en segundos desde cualquier lugar.</p>
+  <div class="hero-btns">
+    <a href="#contacto" class="btn-primary">Solicitar demo gratuita</a>
+    <a href="#como-funciona" class="btn-secondary">Ver cómo funciona →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">90%</div>
+      <div class="stat-label">Menos tiempo en papeleo</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Digital desde el celular</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Papeles físicos necesarios</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problema" id="problema">
+  <div class="text-center">
+    <div class="section-label">El problema</div>
+    <h2 class="section-title">¿Te suena familiar?</h2>
+    <p class="section-sub">Gestionar documentación en obras es un caos. Seguimos en el siglo XX.</p>
+  </div>
+  <div class="problema-grid">
+    <div class="problema-card">
+      <div class="problema-icon">📁</div>
+      <h3>Carpetas físicas por todos lados</h3>
+      <p>Documentos perdidos, mojados o sin firma. Nunca sabes si la carpeta de un trabajador está completa.</p>
+    </div>
+    <div class="problema-card">
+      <div class="problema-icon">📱</div>
+      <h3>Los trabajadores no tienen correo</h3>
+      <p>Pedirles que suban documentos al email es imposible. La mayoría solo usa WhatsApp.</p>
+    </div>
+    <div class="problema-card">
+      <div class="problema-icon">⏰</div>
+      <h3>Horas perdidas en administración</h3>
+      <p>Tu equipo de RRHH pierde días enteros en llamadas, recordatorios y revisar documentos uno a uno.</p>
+    </div>
+    <div class="problema-card">
+      <div class="problema-icon">⚠️</div>
+      <h3>Riesgo de multas</h3>
+      <p>Sin documentación completa, la empresa queda expuesta ante fiscalizaciones de la Inspección del Trabajo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="text-center">
+    <div class="section-label">Cómo funciona</div>
+    <h2 class="section-title">Simple para ti.<br/>Simple para tus trabajadores.</h2>
+    <p class="section-sub">En 4 pasos tienes la carpeta de un trabajador 100% completa y aprobada.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Crea el lote de obra</h3>
+      <p>Sube la lista de trabajadores con su RUT y teléfono desde un Excel. En segundos.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>El trabajador recibe un link</h3>
+      <p>Le llega un mensaje de WhatsApp con un link único. Sin apps, sin contraseñas.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Sube sus documentos</h3>
+      <p>Fotos de su cédula, certificados y exámenes desde su celular. Toma menos de 5 minutos.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Tú apruebas en segundos</h3>
+      <p>Ves el semáforo de cada trabajador: verde, amarillo o rojo. Aprueba o rechaza documentos con un clic.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section id="funcionalidades" style="background: var(--gray-50);">
+  <div class="text-center">
+    <div class="section-label">Funcionalidades</div>
+    <h2 class="section-title">Todo lo que necesita<br/>tu equipo de RRHH</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🟢</div>
+      <h3>Semáforo de carpetas</h3>
+      <p>Vista instantánea del estado de cada trabajador: verde (completo), amarillo (en proceso) o rojo (pendiente).</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3>Integración WhatsApp</h3>
+      <p>Los trabajadores reciben su link por WhatsApp. Sin correo, sin apps que instalar. Solo abren el link y suben sus fotos.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Dashboard en tiempo real</h3>
+      <p>Ve de un vistazo cuántos trabajadores están listos para entrar a faena y cuántos faltan.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✅</div>
+      <h3>Validación con un clic</h3>
+      <p>Aprueba o rechaza documentos con comentarios. El trabajador es notificado automáticamente.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>100% desde el celular</h3>
+      <p>Diseñado para usarse en terreno. Funciona perfecto en cualquier smartphone, sin instalar nada.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Seguro y privado</h3>
+      <p>Los documentos se almacenan de forma segura. Cada trabajador solo ve su propia carpeta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIEN -->
+<section class="para-quien" id="para-quien">
+  <div class="text-center">
+    <div class="section-label">Para quién es</div>
+    <h2 class="section-title">Hecho para la industria<br/>de la construcción</h2>
+  </div>
+  <div class="audience-grid">
+    <div class="audience-card">
+      <h3>👷 Administradores de obra</h3>
+      <p>Controla en tiempo real qué trabajadores tienen su documentación completa para ingresar a faena. Sin llamadas, sin papeles.</p>
+      <span class="audience-tag">Administración de obra</span>
+    </div>
+    <div class="audience-card">
+      <h3>👩‍💼 Jefes de RRHH</h3>
+      <p>Gestiona decenas de contrataciones al mismo tiempo. Aprueba documentos desde tu escritorio o desde terreno.</p>
+      <span class="audience-tag">Recursos Humanos</span>
+    </div>
+    <div class="audience-card">
+      <h3>🏢 Empresas contratistas</h3>
+      <p>Presenta carpetas completas a tus mandantes en segundos. Evita multas y atrasos por documentación incompleta.</p>
+      <span class="audience-tag">Contratistas</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contacto">
+  <div class="section-label" style="color: #86efac;">Empieza hoy</div>
+  <h2>¿Listo para digitalizar<br/>tu obra?</h2>
+  <p>Déjanos tu correo y te contactamos para mostrarte ConstruHire en 15 minutos.</p>
+  <form class="cta-form" onsubmit="handleSubmit(event)">
+    <input type="email" placeholder="tu@empresa.cl" required id="emailInput" />
+    <button type="submit" class="btn-cta">Quiero una demo →</button>
+  </form>
+  <p style="margin-top:1rem; font-size:0.8rem; color:rgba(255,255,255,0.5);">Sin compromisos. Sin tarjeta de crédito.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ConstruHire</div>
+  <p>La plataforma de gestión documental para la industria de la construcción.</p>
+  <p style="margin-top:1rem;">© 2025 ConstruHire · <a href="mailto:hola@construhire.com">hola@construhire.com</a></p>
+</footer>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById('emailInput').value;
+    alert('¡Gracias! Te contactaremos pronto a ' + email);
+    e.target.reset();
+  }
+</script>
+
+</body>
+</html>
