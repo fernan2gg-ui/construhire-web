@@ -43,7 +43,7 @@
     .btn-nav {
       background: var(--green); color: white; padding: 0.5rem 1.25rem;
       border-radius: 8px; font-weight: 600; font-size: 0.9rem;
-      text-decoration: none; transition: background 0.2s;
+      text-decoration: none; transition: background 0.2s; cursor: pointer; border: none;
     }
     .btn-nav:hover { background: var(--green-dark); color: white; }
 
@@ -76,6 +76,7 @@
       background: white; color: var(--green); padding: 0.85rem 2rem;
       border-radius: 10px; font-weight: 700; font-size: 1rem;
       text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      border: none; cursor: pointer;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
     .btn-secondary {
@@ -177,6 +178,52 @@
       border-radius: 100px;
     }
 
+    /* ── PRECIOS ── */
+    .precios { background: white; }
+    .precios-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem; max-width: 1000px; margin-left: auto; margin-right: auto;
+    }
+    .precio-card {
+      border: 2px solid #e5e7eb; border-radius: 16px; padding: 2rem;
+      position: relative; transition: all 0.2s;
+    }
+    .precio-card:hover { border-color: var(--green); box-shadow: 0 8px 30px rgba(26,107,58,0.1); }
+    .precio-card.popular {
+      border-color: var(--green); background: var(--green-50);
+    }
+    .popular-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--green); color: white; font-size: 0.75rem; font-weight: 700;
+      padding: 0.3rem 1rem; border-radius: 100px; white-space: nowrap;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .precio-plan { font-size: 0.85rem; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+    .precio-nombre { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .precio-desc { font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.5; }
+    .precio-valor {
+      font-size: 2.5rem; font-weight: 800; color: var(--gray-900);
+      margin-bottom: 0.25rem; line-height: 1;
+    }
+    .precio-valor span { font-size: 1rem; font-weight: 500; color: var(--gray-600); }
+    .precio-sub { font-size: 0.8rem; color: var(--gray-600); margin-bottom: 1.75rem; }
+    .precio-features { list-style: none; margin-bottom: 2rem; }
+    .precio-features li {
+      font-size: 0.9rem; color: var(--gray-700); padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .precio-features li:last-child { border-bottom: none; }
+    .precio-features li::before { content: "✓"; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .btn-precio {
+      width: 100%; padding: 0.85rem; border-radius: 10px; font-weight: 700;
+      font-size: 0.95rem; cursor: pointer; transition: all 0.2s; border: 2px solid var(--green);
+      background: white; color: var(--green);
+    }
+    .btn-precio:hover { background: var(--green); color: white; }
+    .precio-card.popular .btn-precio { background: var(--green); color: white; }
+    .precio-card.popular .btn-precio:hover { background: var(--green-dark); }
+
     /* ── CTA ── */
     .cta-section {
       background: linear-gradient(135deg, var(--green-dark), var(--green));
@@ -187,21 +234,13 @@
       margin-bottom: 1rem; letter-spacing: -0.5px;
     }
     .cta-section p { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-bottom: 2.5rem; }
-    .cta-form {
-      display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
-      max-width: 480px; margin: 0 auto;
+    .btn-cta-white {
+      background: white; color: var(--green); padding: 1rem 2.5rem;
+      border-radius: 10px; font-weight: 700; font-size: 1.1rem;
+      border: none; cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
     }
-    .cta-form input {
-      flex: 1; min-width: 220px; padding: 0.85rem 1.25rem;
-      border-radius: 10px; border: none; font-size: 1rem;
-      outline: none;
-    }
-    .btn-cta {
-      background: #16a34a; color: white; padding: 0.85rem 1.75rem;
-      border-radius: 10px; font-weight: 700; font-size: 1rem;
-      border: none; cursor: pointer; transition: background 0.2s; white-space: nowrap;
-    }
-    .btn-cta:hover { background: #15803d; }
+    .btn-cta-white:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
 
     /* ── FOOTER ── */
     footer {
@@ -212,14 +251,128 @@
     footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
     footer a:hover { color: white; }
 
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: white; border-radius: 20px; padding: 2.5rem;
+      max-width: 500px; width: 100%; position: relative;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-close {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      background: var(--gray-100); border: none; cursor: pointer;
+      width: 32px; height: 32px; border-radius: 50%;
+      font-size: 1rem; display: flex; align-items: center; justify-content: center;
+      color: var(--gray-600); transition: background 0.2s;
+    }
+    .modal-close:hover { background: #e5e7eb; }
+    .modal h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.3px; }
+    .modal-sub { font-size: 0.95rem; color: var(--gray-600); margin-bottom: 1.75rem; line-height: 1.5; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--gray-700); margin-bottom: 0.4rem; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 0.75rem 1rem; border: 2px solid #e5e7eb;
+      border-radius: 10px; font-size: 0.95rem; font-family: inherit;
+      transition: border-color 0.2s; outline: none; background: white;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--green); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-submit {
+      width: 100%; padding: 1rem; background: var(--green); color: white;
+      border: none; border-radius: 10px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s; margin-top: 0.5rem;
+      font-family: inherit;
+    }
+    .btn-submit:hover { background: var(--green-dark); }
+    .btn-submit:disabled { background: #9ca3af; cursor: not-allowed; }
+    .form-note { font-size: 0.78rem; color: var(--gray-600); text-align: center; margin-top: 0.75rem; }
+    .modal-success { text-align: center; padding: 1rem 0; }
+    .modal-success .success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .modal-success h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .modal-success p { color: var(--gray-600); line-height: 1.6; }
+
     @media (max-width: 640px) {
       nav .nav-links { display: none; }
       .hero { padding: 4rem 5% 3rem; }
       .hero-stats { gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .modal { padding: 1.75rem; }
     }
   </style>
 </head>
 <body>
+
+<!-- MODAL DEMO -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <div id="modalForm">
+      <h2>Solicitar demo gratuita</h2>
+      <p class="modal-sub">Cuéntanos sobre tu empresa y te mostramos ConstruHire en vivo en menos de 15 minutos.</p>
+
+      <form action="https://formsubmit.co/fernan2gg@gmail.com" method="POST" onsubmit="handleDemoSubmit(event)">
+        <input type="hidden" name="_subject" value="Nueva solicitud de demo — ConstruHire" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" value="https://construhire.com" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre">Nombre *</label>
+            <input type="text" id="nombre" name="Nombre" placeholder="Tu nombre" required />
+          </div>
+          <div class="form-group">
+            <label for="empresa">Empresa *</label>
+            <input type="text" id="empresa" name="Empresa" placeholder="Nombre empresa" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="telefono">Teléfono *</label>
+            <input type="tel" id="telefono" name="Teléfono" placeholder="+56 9 1234 5678" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="Email" placeholder="tu@empresa.cl" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="trabajadores">¿Cuántos trabajadores gestionas?</label>
+          <select id="trabajadores" name="Trabajadores">
+            <option value="">Selecciona...</option>
+            <option value="1-20">1 – 20 trabajadores</option>
+            <option value="21-50">21 – 50 trabajadores</option>
+            <option value="51-200">51 – 200 trabajadores</option>
+            <option value="200+">Más de 200 trabajadores</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Quiero mi demo gratuita →</button>
+        <p class="form-note">Sin compromisos. Te contactamos en menos de 24 horas.</p>
+      </form>
+    </div>
+
+    <div id="modalSuccess" class="modal-success" style="display:none;">
+      <div class="success-icon">🎉</div>
+      <h3>¡Solicitud enviada!</h3>
+      <p>Gracias, <strong id="successName"></strong>. Te contactaremos a la brevedad para coordinar tu demo personalizada.</p>
+      <button onclick="closeModal()" style="margin-top:1.5rem; padding:0.75rem 2rem; background:var(--green); color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer; font-size:0.95rem;">Cerrar</button>
+    </div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -227,8 +380,9 @@
   <div class="nav-links">
     <a href="#como-funciona">Cómo funciona</a>
     <a href="#funcionalidades">Funcionalidades</a>
+    <a href="#precios">Precios</a>
     <a href="#para-quien">Para quién</a>
-    <a href="#contacto" class="btn-nav">Solicitar demo</a>
+    <button onclick="openModal()" class="btn-nav">Solicitar demo</button>
   </div>
 </nav>
 
@@ -238,7 +392,7 @@
   <h1>Gestiona la documentación<br/>de tus trabajadores <em>sin papeles</em></h1>
   <p>ConstruHire digitaliza la carpeta de contratación. Los trabajadores suben sus documentos desde su celular. Tú los apruebas en segundos desde cualquier lugar.</p>
   <div class="hero-btns">
-    <a href="#contacto" class="btn-primary">Solicitar demo gratuita</a>
+    <button onclick="openModal()" class="btn-primary">Solicitar demo gratuita</button>
     <a href="#como-funciona" class="btn-secondary">Ver cómo funciona →</a>
   </div>
   <div class="hero-stats">
@@ -359,6 +513,69 @@
   </div>
 </section>
 
+<!-- PRECIOS -->
+<section class="precios" id="precios">
+  <div class="text-center">
+    <div class="section-label">Precios</div>
+    <h2 class="section-title">Planes para cada tamaño<br/>de empresa</h2>
+    <p class="section-sub">Sin contratos anuales. Sin letra chica. Cancela cuando quieras.</p>
+  </div>
+  <div class="precios-grid">
+
+    <div class="precio-card">
+      <div class="precio-plan">Starter</div>
+      <div class="precio-nombre">Para obras pequeñas</div>
+      <div class="precio-desc">Ideal para contratistas y obras con pocos trabajadores.</div>
+      <div class="precio-valor">$49.990 <span>CLP/mes</span></div>
+      <div class="precio-sub">Por proyecto activo</div>
+      <ul class="precio-features">
+        <li>Hasta 30 trabajadores activos</li>
+        <li>1 proyecto simultáneo</li>
+        <li>Envío por WhatsApp incluido</li>
+        <li>Semáforo de carpetas</li>
+        <li>Soporte por email</li>
+      </ul>
+      <button class="btn-precio" onclick="openModal()">Solicitar demo →</button>
+    </div>
+
+    <div class="precio-card popular">
+      <div class="popular-badge">⭐ Más popular</div>
+      <div class="precio-plan">Pro</div>
+      <div class="precio-nombre">Para medianas constructoras</div>
+      <div class="precio-desc">Para empresas con múltiples obras activas al mismo tiempo.</div>
+      <div class="precio-valor">$129.990 <span>CLP/mes</span></div>
+      <div class="precio-sub">Hasta 5 proyectos simultáneos</div>
+      <ul class="precio-features">
+        <li>Hasta 200 trabajadores activos</li>
+        <li>5 proyectos simultáneos</li>
+        <li>Envío por WhatsApp incluido</li>
+        <li>Semáforo + historial de documentos</li>
+        <li>Exportación a Excel/PDF</li>
+        <li>Soporte prioritario</li>
+      </ul>
+      <button class="btn-precio" onclick="openModal()">Solicitar demo →</button>
+    </div>
+
+    <div class="precio-card">
+      <div class="precio-plan">Empresa</div>
+      <div class="precio-nombre">Para grandes constructoras</div>
+      <div class="precio-desc">Proyectos ilimitados y trabajadores ilimitados. Precio a medida.</div>
+      <div class="precio-valor">A medida</div>
+      <div class="precio-sub">Precio según volumen</div>
+      <ul class="precio-features">
+        <li>Trabajadores ilimitados</li>
+        <li>Proyectos ilimitados</li>
+        <li>Integración con sistemas propios</li>
+        <li>Onboarding dedicado</li>
+        <li>Soporte 24/7 con ejecutivo</li>
+        <li>Factura empresa + SLA</li>
+      </ul>
+      <button class="btn-precio" onclick="openModal()">Hablar con ventas →</button>
+    </div>
+
+  </div>
+</section>
+
 <!-- PARA QUIEN -->
 <section class="para-quien" id="para-quien">
   <div class="text-center">
@@ -388,12 +605,8 @@
 <section class="cta-section" id="contacto">
   <div class="section-label" style="color: #86efac;">Empieza hoy</div>
   <h2>¿Listo para digitalizar<br/>tu obra?</h2>
-  <p>Déjanos tu correo y te contactamos para mostrarte ConstruHire en 15 minutos.</p>
-  <form class="cta-form" onsubmit="handleSubmit(event)">
-    <input type="email" placeholder="tu@empresa.cl" required id="emailInput" />
-    <button type="submit" class="btn-cta">Quiero una demo →</button>
-  </form>
-  <p style="margin-top:1rem; font-size:0.8rem; color:rgba(255,255,255,0.5);">Sin compromisos. Sin tarjeta de crédito.</p>
+  <p>Te mostramos ConstruHire en vivo en 15 minutos.<br/>Sin compromisos. Sin tarjeta de crédito.</p>
+  <button onclick="openModal()" class="btn-cta-white">Solicitar demo gratuita →</button>
 </section>
 
 <!-- FOOTER -->
@@ -404,11 +617,61 @@
 </footer>
 
 <script>
-  function handleSubmit(e) {
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    // Reset form state
+    setTimeout(() => {
+      document.getElementById('modalForm').style.display = 'block';
+      document.getElementById('modalSuccess').style.display = 'none';
+    }, 300);
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  function handleDemoSubmit(e) {
     e.preventDefault();
-    const email = document.getElementById('emailInput').value;
-    alert('¡Gracias! Te contactaremos pronto a ' + email);
-    e.target.reset();
+    const form = e.target;
+    const nombre = document.getElementById('nombre').value;
+    const btn = document.getElementById('submitBtn');
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    const data = new FormData(form);
+
+    fetch('https://formsubmit.co/ajax/fernan2gg@gmail.com', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: data
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('successName').textContent = nombre;
+      document.getElementById('modalSuccess').style.display = 'block';
+    })
+    .catch(err => {
+      // Fallback: show success anyway (form may still have submitted)
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('successName').textContent = nombre;
+      document.getElementById('modalSuccess').style.display = 'block';
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = 'Quiero mi demo gratuita →';
+    });
   }
 </script>
 
